@@ -240,6 +240,5 @@ def get_arrivals_vs_population_graph(data2, value):
     fig3 = go.Figure(data=go.Scatter(x=data2['Population (residents)'], y=data2[name], text = data2['Region'],
                 mode='markers', marker=dict(color='green')))
     fig3.update_traces(marker_size=15)
-    fig3.update_layout(title = "Graph 3: Air Arrivals VS Region Population (2020)", width = 600, height = 500, 
-                xaxis_title='Region Population', yaxis_title=name)
+    fig3.update_layout(width = 600, height = 500, xaxis_title='Region Population', yaxis_title=name)
     return fig3
