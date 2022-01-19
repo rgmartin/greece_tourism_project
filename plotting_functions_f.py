@@ -91,12 +91,12 @@ def employment_data(file_names):
 def graph_employment_per_year(list_of_df, year):
 
     #TOTAL COUNTRY EMPLOYMENT GRAPH
-    #i = year[0] - 2010
-    #j = year[1] - 2010
-    i = 0
-    j = 10
+    i = year[0] - 2010
+    j = year[1] - 2010
+    #i = 0
+    #j = 10
     fig = px.line(list_of_df[0], x=list_of_df[0]["Year"][i:j], y=list_of_df[0]["Country Total"][i:j], title='Total Country Employment per Year', width=800, height=600)
-    fig.show()
+    #fig.show()
     
     return fig
 
