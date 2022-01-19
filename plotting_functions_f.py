@@ -57,6 +57,7 @@ def web_scraping():
 
     return region_names, file_names
 
+#GRAPH 1 ------------------------------------------------------------ *NOT USED
 def employment_data(file_names):
     
     #EMPLOYMENT DATA ANALYSIS
@@ -91,15 +92,14 @@ def employment_data(file_names):
 def graph_employment_per_year(list_of_df, year):
 
     #TOTAL COUNTRY EMPLOYMENT GRAPH
+    #*************TODO : labels X and Y
     i = year[0] - 2010
-    j = year[1] - 2010
-    #i = 0
-    #j = 10
-    fig = px.line(list_of_df[0], x=list_of_df[0]["Year"][i:j], y=list_of_df[0]["Country Total"][i:j], title='Total Country Employment per Year', width=800, height=600)
-    #fig.show()
+    j = year[1] - 2010 + 1
+    fig = px.line(list_of_df[0], x=list_of_df[0]["Year"][i:j], y=list_of_df[0]["Country Total"][i:j], width=800, height=600)
     
     return fig
 
+#GRAPH 2 ------------------------------------------------------------
 def employment_per_region(list_of_df, region_names):
 
     #EMPLOYMENT PER REGION DATA
@@ -121,11 +121,10 @@ def employment_data_graph(tot, year, region_names):
     for i in range(1, 13):
         fig2.add_trace(go.Scatter(name = region_names[i], x = years, y = tot.iloc[:,i], fill='tonexty', 
                                   mode = "none", stackgroup='one'))           
-    fig2.update_layout(title = "Graph 2: Employment in Millions per Region", width = 800, 
-                       height = 600, xaxis_title='Year', yaxis_title='Employment')
+    fig2.update_layout(width = 800, height = 600, xaxis_title='Year', yaxis_title='Employment')
     return fig2
 
-
+#GRAPH 3 ------------------------------------------------------------
 def arrivals_per_country():
 
     #ARRIVALS PER COUNTRY ANALYSIS
@@ -157,14 +156,14 @@ def get_graph_1(year, arr, country_names):
         fig1.add_trace(go.Bar(x = arr.iloc[:,i]/arr['Total']*100, y = years, name = country_names[i], 
                               marker=dict(line=dict(width=0.1)), orientation = 'h'))
     fig1.update_traces(width=0.65)
-    fig1.update_layout(title = "Graph 1: Incoming Arrivals per Country of Origin", 
-                       xaxis=dict(title_text="Total Arrivals", titlefont=dict(size=15), 
+    fig1.update_layout(xaxis=dict(title_text="Share of Arrivals", titlefont=dict(size=15), 
                                   ticktext=["0%", "20%", "40%", "60%","80%","100%"], 
                                   tickvals=[0, 20, 40, 60, 80, 100], showgrid=False, showline=False, zeroline=False), 
                        yaxis=dict(title_text="Year", titlefont=dict(size=15), tickvals = years), width=800, height=1000, 
                        barmode='stack', bargap=0.0)
     return fig1
 
+#GRAPH 4 ------------------------------------------------------------ *NOT USED
 def region_population_vs_tourism(file_names, region_names):
 
     #REGION POPULATION VS INCOMING TOURISM (INTERNATIONAL + DOMESTIC) ANALYSIS
@@ -223,6 +222,7 @@ def arrivals_per_region_graph(data):
     
     return fig3
 
+#GRAPH 5 ------------------------------------------------------------
 def import_population_data(data):
     #IMPORT EXCEL FILE WITH POPULATION DATA PER REGION
     #TODO***WEBSCRAPE POPULATION DATA INSTEAD OF IMPORT EXCEL FILE***
@@ -243,5 +243,3 @@ def get_arrivals_vs_population_graph(data2, value):
     fig3.update_layout(title = "Graph 3: Air Arrivals VS Region Population (2020)", width = 600, height = 500, 
                 xaxis_title='Region Population', yaxis_title=name)
     return fig3
-
-
