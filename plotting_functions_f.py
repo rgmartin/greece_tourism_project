@@ -183,21 +183,21 @@ def region_population_vs_tourism(file_names, region_names):
         file = pd.ExcelFile(x)
         df = file.parse(tab_names[i], header = 3, skipfooter = skipfooter[i], index_col = 0)
 
-    if i == 4:
-        df2 = {'Region': region_names[i], 'Total International Air Arrivals': 0, 'Total Domestic Air Arrivals': df['Σύνολο']}
-        data = data.append(pd.DataFrame(df2), ignore_index = True)
+        if i == 4:
+            df2 = {'Region': region_names[i], 'Total International Air Arrivals': 0, 'Total Domestic Air Arrivals': df['Σύνολο']}
+            data = data.append(pd.DataFrame(df2), ignore_index = True)
 
-    elif i == 5:
-        df2 = {'Region': region_names[i], 'Total International Air Arrivals': df['Σύνολο '], 'Total Domestic Air Arrivals': df['Σύνολο .1']}
-        data = data.append(pd.DataFrame(df2), ignore_index = True)
+        elif i == 5:
+            df2 = {'Region': region_names[i], 'Total International Air Arrivals': df['Σύνολο '], 'Total Domestic Air Arrivals': df['Σύνολο .1']}
+            data = data.append(pd.DataFrame(df2), ignore_index = True)
   
-    elif i == 12:
-        df2 = {'Region': region_names[i], 'Total International Air Arrivals': df['Σκύρος'], 'Total Domestic Air Arrivals': df['Σκύρος.1']}
-        data = data.append(pd.DataFrame(df2), ignore_index = True)
+        elif i == 12:
+            df2 = {'Region': region_names[i], 'Total International Air Arrivals': df['Σκύρος'], 'Total Domestic Air Arrivals': df['Σκύρος.1']}
+            data = data.append(pd.DataFrame(df2), ignore_index = True)
   
-    else:
-        df2 = {'Region': region_names[i], 'Total International Air Arrivals': df['Σύνολο'], 'Total Domestic Air Arrivals': df['Σύνολο.1']}
-        data = data.append(pd.DataFrame(df2), ignore_index = True)
+        else:
+            df2 = {'Region': region_names[i], 'Total International Air Arrivals': df['Σύνολο'], 'Total Domestic Air Arrivals': df['Σύνολο.1']}
+            data = data.append(pd.DataFrame(df2), ignore_index = True)
 
     data["Total Air Arrivals"] = data["Total International Air Arrivals"] + data["Total Domestic Air Arrivals"]
     
