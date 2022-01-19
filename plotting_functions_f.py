@@ -226,7 +226,7 @@ def arrivals_per_region_graph(data):
 def import_population_data(data):
     #IMPORT EXCEL FILE WITH POPULATION DATA PER REGION
     #TODO***WEBSCRAPE POPULATION DATA INSTEAD OF IMPORT EXCEL FILE***
-    pop_data = pd.read_excel(r'C:\Users\bales\Documents\Doc_autres\Data_Science\Greece_Tourism_Analysis\Population_data_per_region.xlsx')
+    pop_data = pd.read_excel(r'Population_data_per_region.xlsx')
     data2 = pd.merge(data, pop_data, on='Region')
     
     return data2
