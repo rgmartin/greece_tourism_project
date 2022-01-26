@@ -1,12 +1,12 @@
 #####Step 1: start by importing all of the necessary packages#####
-import requests  # requesting URLs
-import urllib.request  # requesting URLs
+import requests #requesting URLs
+import urllib.request #requesting URLs
 import os
-import time  # setting the speed at which the requests run
-import re  # regexp string manipulation
-import pandas as pd  # for simplifying data operations (e.g. creating dataframe objects)
-import matplotlib.pyplot as plt  # for plotting the scraped data
-from bs4 import BeautifulSoup  # for web-scraping operations
+import time #setting the speed at which the requests run
+import re #regexp string manipulation
+import pandas as pd #for simplifying data operations (e.g. creating dataframe objects)
+import matplotlib.pyplot as plt #for plotting the scraped data
+from bs4 import BeautifulSoup #for web-scraping operations
 import matplotlib.pyplot as plt
 import matplotlib
 import numpy as np
@@ -17,6 +17,7 @@ import dash_html_components as html
 import dash_core_components as dcc
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
+
 
 
 def get_countries_df(years):
@@ -31,9 +32,7 @@ def get_countries_df(years):
     def extract_region_name(url):
         file_w_extension = os.path.basename(url)
         file = os.path.splitext(file_w_extension)[0]
-        name = ''.join(x for x in file if x.isalpha())
-        name = name.replace("Macedonia", "Mac.")
-        return name
+        return ''.join(x for x in file if x.isalpha())
 
     # auxiliary function for reading data from a particular region
     def read_region(region_url, key_figure=0, year=2020):
@@ -128,8 +127,7 @@ def incoming_tourism(data, year=2020):
             color=[f'rgba{tuple(matplotlib.colors.to_rgba(c)[:3] + (0.2,))}' for c in links['Color']]
 
         ))])
-    fig.update_layout(font_size=12, width=800, height=600, margin=dict(l=10, r=10, t=10, b=10))
-
+    fig.update_layout(font_size=12, width=800, height=700)
     # fig.show()
     return fig
 
@@ -144,9 +142,7 @@ def get_regions_df():
     def extract_region_name(url):
         file_w_extension = os.path.basename(url)
         file = os.path.splitext(file_w_extension)[0]
-        name = ''.join(x for x in file if x.isalpha())
-        name = name.replace("Macedonia", "Mac.")
-        return name
+        return ''.join(x for x in file if x.isalpha())
 
     def read_inbound_tourism(url):
         data = requests.get(url).content
@@ -166,20 +162,12 @@ def get_regions_df():
     # ideas of visualisation https://www.politico.eu/article/europe-tourism-boom-time-overtourism-top-destinations/
     return inbound_tourism_shares
 
-
-def share_of_inbound_tourism(data, years=[2010, 2020]):
+def share_of_inbound_tourism(data, years = [2010,2020]):
     data = data.loc[years[0]: years[1]]
-    fig = px.bar(data, x=data.index, y=data.columns,
-                 labels=dict(value="Inbound tourism share (%)"))
+    fig = px.bar(data,x = data.index, y =data.columns,
+               labels=dict(value="Inbound tourism share (%)"))
     width = 200 + (years[1] - years[0]) * 60
-    fig.update_layout(font_size=12, width=width, height=600,
-                      legend_title='Region', margin=dict(l=10, r=10, t=10, b=10))
-    fig.update_layout(legend=dict(
-        orientation="h",
-        yanchor="bottom",
-        y=1.02,
-        xanchor="right",
-        x=1
-    ))
-    # fig.show()
+    fig.update_layout( font_size=12, width=width,height=600,
+                    legend_title = 'Region')
+    #fig.show()
     return fig
