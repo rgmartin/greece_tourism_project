@@ -19,16 +19,18 @@ import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
 
 
-
+# get inbound tourism per country dataframe
+# input: receives the years for which the data is needed
+# returns a dataframe with a dataframe to be read by function plot_incoming_tourism_per_country
 def get_countries_df(years):
+    
     # auxiliary function to find the links of the excel files containing the regional data
     def web_scrapper(url='https://insete.gr/perifereies/'):
         response = requests.get(url)  # Connect to the URL using the "requests" package
         soup = BeautifulSoup(response.text, 'html.parser')
         return [link.get('href') for link in soup.find_all('a') if ('xlsx' in link.get('href'))]
 
-        # auxiliary function to extract the region name from the url
-
+    # auxiliary function to extract the region name from the url
     def extract_region_name(url):
         file_w_extension = os.path.basename(url)
         file = os.path.splitext(file_w_extension)[0]
@@ -79,8 +81,8 @@ def get_countries_df(years):
     return data
 
 
-# global function for plotting incoming tourism to different regions in Greece
-def incoming_tourism(data, year=2020):
+# global function for plotting incoming tourism to different regions in Greece from different countries
+def plot_incoming_tourism_per_country(data, year=2020):
     # auxiliary function to construct the nodes of the shankey diagram
     def nodes_df(df):
         regions = list(df.columns)
@@ -128,10 +130,14 @@ def incoming_tourism(data, year=2020):
 
         ))])
     fig.update_layout(font_size=12, width=800, height=700)
+    fig.update_layout(margin=dict(l=10, r=10, t=10, b=10))
+    
     # fig.show()
     return fig
 
 
+
+# function to read a dataframe with the shares of inbound tourism per Grece region
 def get_regions_df():
     # auxiliary function to find the links of the excel files containing the regional data
     def get_links(url='https://insete.gr/perifereies/'):
@@ -162,12 +168,13 @@ def get_regions_df():
     # ideas of visualisation https://www.politico.eu/article/europe-tourism-boom-time-overtourism-top-destinations/
     return inbound_tourism_shares
 
-def share_of_inbound_tourism(data, years = [2010,2020]):
+def plot_share_of_inbound_tourism(data, years = [2010,2020]):
     data = data.loc[years[0]: years[1]]
     fig = px.bar(data,x = data.index, y =data.columns,
                labels=dict(value="Inbound tourism share (%)"))
     width = 200 + (years[1] - years[0]) * 60
     fig.update_layout( font_size=12, width=width,height=600,
                     legend_title = 'Region')
+    fig.update_layout(margin=dict(l=10, r=10, t=10, b=10))
     #fig.show()
     return fig
