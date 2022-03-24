@@ -121,7 +121,13 @@ def employment_data_graph(employ_data, year, region_names):
     for i in range(1, 13):
         fig1.add_trace(go.Scatter(name = region_names[i], x = years, y = employ_data.iloc[:,i], fill='tonexty', 
                                   mode = "none", stackgroup='one'))           
-    fig1.update_layout(width = 800, height = 600, xaxis_title='Year', yaxis_title='Employment')
+    fig1.update_layout(width = 600, height = 600, xaxis_title='Year', yaxis_title='Employment')
+    fig1.update_layout(
+
+
+
+    )
+
     #RETURN GRAPH
     return fig1
 

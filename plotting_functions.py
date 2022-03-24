@@ -313,8 +313,21 @@ def employment_data_graph(employ_data, year, region_names):
         fig1.add_trace(go.Scatter(name = region_names[i], x = years, y = employ_data.iloc[:,i], fill='tonexty', 
                                   mode = "none", stackgroup='one'))           
     fig1.update_layout( xaxis_title='Year', yaxis_title='Employment')
-    fig1.update_layout(font_size=12, width=800, height=600)
     fig1.update_layout(margin=dict(l=10, r=10, t=10, b=10))
+    fig1.update_layout(
+        font=dict(
+            family="Helvetica",
+            size=24,
+            color="RebeccaPurple"),
+        width=600,
+        height=600)
+
+    fig1.update_layout(
+        legend_title = 'Region',
+        legend=dict(
+            y=1.5
+        ),
+        legend_orientation="h")
 
     #RETURN GRAPH
     return fig1
@@ -356,8 +369,18 @@ def get_graph_1(year, arr, country_names):
                                   tickvals=[0, 20, 40, 60, 80, 100], showgrid=False, showline=False, zeroline=False), 
                        yaxis=dict(title_text="Year", titlefont=dict(size=15), tickvals = years), width=800, height=1000, 
                        barmode='stack', bargap=0.0)
-    fig1.update_layout(font_size=12, width=800, height=600)
     fig1.update_layout(margin=dict(l=10, r=10, t=10, b=10))
+    fig1.update_layout(
+        font=dict(
+            family="Helvetica",
+            size=24,
+            color="RebeccaPurple"),
+        width=600,
+        height=600)
+
+    fig1.update_layout(
+        legend_title = 'Country')
+
     return fig1
 
 #GRAPH 4 ------------------------------------------------------------ *NOT USED
@@ -419,6 +442,14 @@ def get_arrivals_vs_population_graph(data2, value):
                 mode='markers', marker=dict(color='green')))
     fig3.update_traces(marker_size=15)
     fig3.update_layout(width = 600, height = 500, xaxis_title='Region Population', yaxis_title=name)
-    fig3.update_layout(font_size=12, width=800, height=600)
+
     fig3.update_layout(margin=dict(l=10, r=10, t=10, b=10))
+    fig3.update_layout(
+        font=dict(
+            family="Helvetica",
+            size=24,
+            color="RebeccaPurple"),
+        width=600,
+        height=600)
+
     return fig3
