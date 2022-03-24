@@ -131,7 +131,14 @@ def plot_incoming_tourism_per_country(data, year=2020):
             color=[f'rgba{tuple(matplotlib.colors.to_rgba(c)[:3] + (0.2,))}' for c in links['Color']]
 
         ))])
-    fig.update_layout(font_size=12, width=800, height=600)
+    fig.update_layout(
+        font=dict(
+            family="Helvetica",
+            size=24,
+            color="RebeccaPurple"),
+        width=600,
+        height=600)
+
     fig.update_layout(margin=dict(l=10, r=10, t=10, b=10))
     
     # fig.show()
@@ -175,9 +182,21 @@ def plot_share_of_inbound_tourism(data, years = [2010,2020]):
     fig = px.bar(data,x = data.index, y =data.columns,
                labels=dict(value="Inbound tourism share (%)"))
     width = 200 + (years[1] - years[0]) * 60
-    fig.update_layout( font_size=12, width=width,height=600,
+    fig.update_layout(  width=width,height=600,
                     legend_title = 'Region')
     fig.update_layout(margin=dict(l=10, r=10, t=10, b=10))
+    fig.update_layout(
+        font=dict(
+            family="Helvetica",
+            size=20,
+            color="RebeccaPurple"),)
+
+    fig.update_layout(
+        legend=dict(
+            y=1.5
+        ),
+        legend_orientation="h")
+
     #fig.show()
     return fig
 
