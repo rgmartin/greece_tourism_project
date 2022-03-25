@@ -1,26 +1,25 @@
 #####Step 1: start by importing all of the necessary packages#####
 import requests #requesting URLs
-import urllib.request #requesting URLs
+#import urllib.request #requesting URLs
 import os
-import time #setting the speed at which the requests run
+#import time #setting the speed at which the requests run
 import re #regexp string manipulation
 import pandas as pd #for simplifying data operations (e.g. creating dataframe objects)
 import matplotlib.pyplot as plt #for plotting the scraped data
 from bs4 import BeautifulSoup #for web-scraping operations
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import matplotlib
-import numpy as np
+#import numpy as np
 import plotly.graph_objects as go
 import plotly.express as px
-import dash
-import dash_html_components as html
-import dash_core_components as dcc
-import dash_bootstrap_components as dbc
-from dash.dependencies import Input, Output, State
+#import dash
+#import dash_html_components as html
+#import dash_core_components as dcc
+#import dash_bootstrap_components as dbc
+#from dash.dependencies import Input, Output, State
 
 
-
-
+#---------------------------------FUNCTIONS RUBERT---------------------------------------------
 # get inbound tourism per country dataframe
 # input: receives the years for which the data is needed
 # returns a dataframe with a dataframe to be read by function plot_incoming_tourism_per_country
@@ -131,12 +130,18 @@ def plot_incoming_tourism_per_country(data, year=2020):
             color=[f'rgba{tuple(matplotlib.colors.to_rgba(c)[:3] + (0.2,))}' for c in links['Color']]
 
         ))])
-    fig.update_layout(font_size=12, width=800, height=600)
+    fig.update_layout(
+        font=dict(
+            family="Helvetica",
+            size=24,
+            color="RebeccaPurple"),
+        width=1000,
+        height=900)
+
     fig.update_layout(margin=dict(l=10, r=10, t=10, b=10))
     
     # fig.show()
     return fig
-
 
 
 # function to read a dataframe with the shares of inbound tourism per Grece region
@@ -175,29 +180,25 @@ def plot_share_of_inbound_tourism(data, years = [2010,2020]):
     fig = px.bar(data,x = data.index, y =data.columns,
                labels=dict(value="Inbound tourism share (%)"))
     width = 200 + (years[1] - years[0]) * 60
-    fig.update_layout( font_size=12, width=width,height=600,
+    fig.update_layout(width = 1000, height = 900,
                     legend_title = 'Region')
     fig.update_layout(margin=dict(l=10, r=10, t=10, b=10))
+    fig.update_layout(
+        font=dict(
+            family="Helvetica",
+            size=24,
+            color="RebeccaPurple"),)
+
+    fig.update_layout(
+        legend=dict(
+            y=1.2
+        ),
+        legend_orientation="h")
+
     #fig.show()
     return fig
 
-
- # -*- coding: utf-8 -*-
-"""
-Created on Wed Jan 19 08:52:02 2022
-
-@author: bales
-"""
-
-
-
-# Bale's code
-
-#IMPORT LIBRARIES/PACKAGES REQUIRED
-
-
-#*********************************************FUNCTION DEFINITIONS *******************************
-
+#---------------------------------FUNCTIONS FANNY---------------------------------------------
 def web_scraping():
     #WEB SCRAPING
     #CONNECT TO URL FOR WEB SCRAPING
@@ -223,7 +224,7 @@ def web_scraping():
             file_names.append(sub_url)
             region_start_index = re.search(r"uploads",sub_url)
             region_end_index = re.search(r".xlsx",sub_url[region_start_index.span()[0]:len(sub_url)])
-            region_end_url = sub_url[region_start_index.span()[0]+22:region_start_index.span()[0]+region_end_index.span()[0]-2]
+            region_end_url = sub_url[region_start_index.span()[0]+22:region_start_index.span()[0]+region_end_index.span()[0]]
             #CLEAN STRINGS
             region_end_url = re.sub("_", " ", region_end_url)
             region_end_url = re.sub("  ", " ", region_end_url)
@@ -231,6 +232,7 @@ def web_scraping():
     
     #RETURN REGION NAMES AND FILE NAMES
     return region_names, file_names
+
 
 def employment_data(file_names):
     
@@ -271,6 +273,7 @@ def employment_data(file_names):
     #IN DIFFERENT EXCEL FILES (REGIONS)
     return list_of_df
 
+
 def employment_per_region(list_of_df, region_names):
 
     #EMPLOYMENT PER REGION DATA
@@ -281,6 +284,7 @@ def employment_per_region(list_of_df, region_names):
         employ_data = employ_data.rename(columns={employ_data.columns[i+1]: region_names[i]})
         
     return employ_data
+
 
 def employment_data_graph(employ_data, year, region_names):
 
@@ -294,11 +298,13 @@ def employment_data_graph(employ_data, year, region_names):
         fig1.add_trace(go.Scatter(name = region_names[i], x = years, y = employ_data.iloc[:,i], fill='tonexty', 
                                   mode = "none", stackgroup='one'))           
     fig1.update_layout( xaxis_title='Year', yaxis_title='Employment')
-    fig1.update_layout(font_size=12, width=800, height=600)
-    fig1.update_layout(margin=dict(l=10, r=10, t=10, b=10))
+    fig1.update_layout(width=1000, height=900)
+    fig1.update_layout(margin=dict(l=10, r=10, t=10, b=10), 
+                       font=dict(family="Helvetica", size=24, color="RebeccaPurple"))
 
     #RETURN GRAPH
     return fig1
+
 
 #GRAPH 3 ------------------------------------------------------------
 def arrivals_per_country():
@@ -324,6 +330,7 @@ def arrivals_per_country():
     
     return arr, country_names
 
+
 def get_graph_1(year, arr, country_names):
     fig1 = go.Figure()
     years = [*range(year[0], year[1] + 1, 1)]
@@ -332,14 +339,17 @@ def get_graph_1(year, arr, country_names):
         fig1.add_trace(go.Bar(x = arr.iloc[:,i]/arr['Total']*100, y = years, name = country_names[i], 
                               marker=dict(line=dict(width=0.1)), orientation = 'h'))
     fig1.update_traces(width=0.65)
-    fig1.update_layout(xaxis=dict(title_text="Share of Arrivals", titlefont=dict(size=15), 
+    fig1.update_layout(xaxis=dict(title_text="Share of Arrivals", 
                                   ticktext=["0%", "20%", "40%", "60%","80%","100%"], 
                                   tickvals=[0, 20, 40, 60, 80, 100], showgrid=False, showline=False, zeroline=False), 
-                       yaxis=dict(title_text="Year", titlefont=dict(size=15), tickvals = years), width=800, height=1000, 
+                       yaxis=dict(title_text="Year", tickvals = years), 
                        barmode='stack', bargap=0.0)
-    fig1.update_layout(font_size=12, width=800, height=600)
-    fig1.update_layout(margin=dict(l=10, r=10, t=10, b=10))
+    fig1.update_layout(width=1000, height=900)
+    fig1.update_layout(margin=dict(l=10, r=10, t=10, b=10), 
+                       font=dict(family="Helvetica", size=24, color="RebeccaPurple"))
+    
     return fig1
+
 
 #GRAPH 4 ------------------------------------------------------------ *NOT USED
 def region_population_vs_tourism(file_names, region_names):
@@ -390,6 +400,7 @@ def import_population_data(data):
     
     return data2
 
+
 def get_arrivals_vs_population_graph(data2, value):
     if value == "All":
         name = "Total Air Arrivals"
@@ -399,7 +410,8 @@ def get_arrivals_vs_population_graph(data2, value):
     fig3 = go.Figure(data=go.Scatter(x=data2['Population (residents)'], y=data2[name], text = data2['Region'],
                 mode='markers', marker=dict(color='green')))
     fig3.update_traces(marker_size=15)
-    fig3.update_layout(width = 600, height = 500, xaxis_title='Region Population', yaxis_title=name)
-    fig3.update_layout(font_size=12, width=800, height=600)
-    fig3.update_layout(margin=dict(l=10, r=10, t=10, b=10))
+    fig3.update_layout(width = 1000, height = 900, xaxis_title='Region Population', yaxis_title=name)
+    fig3.update_layout(margin=dict(l=10, r=10, t=10, b=10), 
+                       font=dict(family="Helvetica", size=24, color="RebeccaPurple"))
+    
     return fig3
