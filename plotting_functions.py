@@ -303,12 +303,12 @@ def employment_data_graph(employ_data, year, region_names):
                        font=dict(family="Helvetica", size=24, color="RebeccaPurple"))
 
     #RETURN GRAPH
-    fig.update_layout(
+    fig1.update_layout(
         legend=dict(
-            y=1.2
+            y=1.5
         ),
         legend_orientation="h")
-    
+
     return fig1
 
 
