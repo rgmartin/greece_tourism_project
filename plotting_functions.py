@@ -307,6 +307,7 @@ def employment_data_graph(employ_data, year, region_names):
         legend=dict(
             y=1.5
         ),
+        legend_title = 'Region',
         legend_orientation="h")
 
     return fig1
