@@ -302,6 +302,13 @@ def employment_data_graph(employ_data, year, region_names):
     fig1.update_layout(margin=dict(l=10, r=10, t=10, b=10), 
                        font=dict(family="Helvetica", size=24, color="RebeccaPurple"))
 
+    fig1.update_layout(
+    legend_title = 'Region',
+    legend=dict(
+        y=1.5
+    ),
+    legend_orientation="h")
+
     #RETURN GRAPH
     return fig1
 
